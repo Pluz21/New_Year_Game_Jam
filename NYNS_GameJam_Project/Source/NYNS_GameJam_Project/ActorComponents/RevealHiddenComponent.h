@@ -13,7 +13,7 @@ class NYNS_GAMEJAM_PROJECT_API URevealHiddenComponent : public UActorComponent
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FConditionToRevealIsMet);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRevealEvent);
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintAssignable)
 	FConditionToRevealIsMet onConditionToRevealIsMet;
 	UPROPERTY(EditAnywhere, BlueprintAssignable)
 	FRevealEvent onReveal;
@@ -41,7 +41,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void Init();
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void RevealHidden();
 	UFUNCTION()
 	void PlayRevealSound();

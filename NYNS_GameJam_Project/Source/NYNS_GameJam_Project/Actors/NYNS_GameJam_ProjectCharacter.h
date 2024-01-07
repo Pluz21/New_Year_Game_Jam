@@ -64,7 +64,8 @@ protected:
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
+	void Init();
+	void InitInputs();
 
 };
 

@@ -18,7 +18,7 @@ UHideActorComponent::UHideActorComponent()
 void UHideActorComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	Init();
 	// ...
 	
 }
@@ -30,5 +30,20 @@ void UHideActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UHideActorComponent::Init()
+{
+	Reveal();
+}
+
+void UHideActorComponent::Reveal()
+{
+	if (!GetOwner() || GetOwner()->GetComponentByClass<UStaticMeshComponent>() == nullptr)return;
+	GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetVisibility(false, true);
+	UE_LOG(LogTemp, Warning, TEXT("called init inside HIDDEN ACTOR"));
+	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
+
 }
 
