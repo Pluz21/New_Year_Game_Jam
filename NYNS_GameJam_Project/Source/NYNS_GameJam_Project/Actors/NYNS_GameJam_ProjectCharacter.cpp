@@ -69,6 +69,8 @@ void ANYNS_GameJam_ProjectCharacter::SetupPlayerInputComponent(class UInputCompo
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Look);
+	
+		
 	}
 }
 
