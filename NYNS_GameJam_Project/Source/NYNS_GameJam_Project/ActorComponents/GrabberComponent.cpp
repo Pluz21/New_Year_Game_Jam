@@ -151,9 +151,10 @@ void UGrabberComponent::Release()
 {
 	if (physicsHandle->GetGrabbedComponent() && isGrabbing == true)
 	{
+		UPrimitiveComponent* _grabbedComponent = physicsHandle->GetGrabbedComponent();
 		physicsHandle->GetGrabbedComponent()->WakeAllRigidBodies();
 		AActor* _heldActor = physicsHandle->GetGrabbedComponent()->GetOwner();
-
+		_grabbedComponent->SetSimulatePhysics(false);
 		physicsHandle->ReleaseComponent();
 		UE_LOG(LogTemp, Warning, TEXT("Removing tag from %s"), *_heldActor->GetName());
 		SetIsGrabbing();

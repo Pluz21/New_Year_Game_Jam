@@ -19,8 +19,6 @@ void URevealHiddenComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Init();
-
-
 	
 }
 
@@ -43,7 +41,7 @@ void URevealHiddenComponent::Init()
 
 void URevealHiddenComponent::RevealHidden()
 {
-	UE_LOG(LogTemp, Warning, TEXT("REVEAL HIDDEN CALLED FROM WIHTIN COMPO"));
+	UE_LOG(LogTemp, Warning, TEXT("Reveal Hidden Called from RevealHiddenComponent"));
 	if (allHiddenActors.Num() <= 0)return;
 	int _size = allHiddenActors.Num();
 	for (int i = 0; i < _size; i++)

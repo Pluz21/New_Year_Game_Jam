@@ -22,14 +22,14 @@ class NYNS_GAMEJAM_PROJECT_API UGrabberComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UGrabberComponent();
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Grabber",meta = (ClampMin = "10", ClampMax = "100"))
 	float grabRadius = 60;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grabber")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Grabber")
 	bool isGrabbing = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grabber", meta = (ClampMin = "100", ClampMax = "600"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grabber", meta = (ClampMin = "30", ClampMax = "600"))
 	float maxGrabDistance = 600;
-	UPROPERTY(EditAnywhere, Category = "Grabber", meta = (ClampMin = "50", ClampMax = "300"))
+	UPROPERTY(EditAnywhere, Category = "Grabber", meta = (ClampMin = "10", ClampMax = "1000"))
 	float holdDistance = 200;
 	UPROPERTY(VisibleAnywhere)
 	FVector targetLocation = FVector(0);
