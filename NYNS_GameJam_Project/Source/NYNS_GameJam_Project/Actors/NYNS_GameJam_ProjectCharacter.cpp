@@ -8,12 +8,18 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
+#include "NYNS_GameJam_Project/ActorComponents/GrabberComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
 // ANYNS_GameJam_ProjectCharacter
 
 ANYNS_GameJam_ProjectCharacter::ANYNS_GameJam_ProjectCharacter()
 {
+	//Custom Components
+	grabberComponent = CreateDefaultSubobject<UGrabberComponent>(TEXT("GrabberComponent"));
+	physicsHandle = CreateDefaultSubobject<UPhysicsHandleComponent>("PhysicsHandle");
+
+	
 	// Character doesnt have a rifle at start
 	bHasRifle = false;
 	
@@ -35,6 +41,8 @@ ANYNS_GameJam_ProjectCharacter::ANYNS_GameJam_ProjectCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	AddOwnedComponent(grabberComponent);
+	AddOwnedComponent(physicsHandle);
 }
 
 void ANYNS_GameJam_ProjectCharacter::BeginPlay()
@@ -61,6 +69,9 @@ void ANYNS_GameJam_ProjectCharacter::SetupPlayerInputComponent(class UInputCompo
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Look);
 	
+		// Grab
+		EnhancedInputComponent->BindAction(grabInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Grab);
+
 		
 	}
 }
@@ -107,6 +118,12 @@ void ANYNS_GameJam_ProjectCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void ANYNS_GameJam_ProjectCharacter::Grab()
+{
+	if (!grabberComponent)return;
+	grabberComponent->Grab();
 }
 
 void ANYNS_GameJam_ProjectCharacter::SetHasRifle(bool bNewHasRifle)

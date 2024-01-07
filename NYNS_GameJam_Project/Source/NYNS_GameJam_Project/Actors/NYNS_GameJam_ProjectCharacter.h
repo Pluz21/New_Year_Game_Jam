@@ -13,6 +13,8 @@ class USceneComponent;
 class UCameraComponent;
 class UAnimMontage;
 class USoundBase;
+class UGrabberComponent;
+class UPhysicsHandleComponent;
 
 UCLASS(config=Game)
 class ANYNS_GameJam_ProjectCharacter : public ACharacter
@@ -22,15 +24,23 @@ class ANYNS_GameJam_ProjectCharacter : public ACharacter
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
 
+	//COMPONENTS
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UGrabberComponent* grabberComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UPhysicsHandleComponent> physicsHandle;
 
+	// INPUTS
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputMappingContext* DefaultMappingContext;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* JumpAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> grabInput;
 
 	
 public:
@@ -58,6 +68,8 @@ protected:
 
 	void Look(const FInputActionValue& Value);
 
+	void Grab();
+
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 
@@ -66,6 +78,7 @@ public:
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 	void Init();
 	void InitInputs();
+
 
 };
 
