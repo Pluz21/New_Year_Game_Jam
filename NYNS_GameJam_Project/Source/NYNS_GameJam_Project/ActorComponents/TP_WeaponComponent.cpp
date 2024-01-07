@@ -2,8 +2,8 @@
 
 
 #include "TP_WeaponComponent.h"
-#include "NYNS_GameJam_ProjectCharacter.h"
-#include "NYNS_GameJam_ProjectProjectile.h"
+#include "NYNS_GameJam_Project/Actors/NYNS_GameJam_ProjectCharacter.h"
+#include "NYNS_GameJam_Project/Actors/NYNS_GameJam_ProjectProjectile.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Kismet/GameplayStatics.h"

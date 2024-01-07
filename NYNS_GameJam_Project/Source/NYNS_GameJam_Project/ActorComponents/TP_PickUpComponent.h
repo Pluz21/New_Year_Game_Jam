@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
-#include "NYNS_GameJam_ProjectCharacter.h"
+#include "NYNS_GameJam_Project/Actors/NYNS_GameJam_ProjectCharacter.h"
 #include "TP_PickUpComponent.generated.h"
 
 // Declaration of the delegate that will be called when someone picks this up
