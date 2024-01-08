@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include <NYNS_GameJam_Project/Actors/Door.h>
 #include "TriggerComponent.generated.h"
 
 class URevealHiddenComponent;
@@ -25,6 +26,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<URevealHiddenComponent> revealHiddenCompo;
 
+	UPROPERTY(EditAnywhere)
+	TArray<ADoor*> doorsToOpen;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> snapSound;;
@@ -53,7 +56,7 @@ public:
 	//Other interactions
 	UFUNCTION()
 	void HandleReveal();
-
+	
 	FSnapEvent& OnSnap() { return onSnap; }
 
 

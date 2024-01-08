@@ -8,6 +8,7 @@
 #include <NYNS_GameJam_Project/Actors/NYNS_GameJam_ProjectCharacter.h>
 
 #include "GrabberComponent.h"
+#include "MoverComponent.h"
 UTriggerComponent::UTriggerComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -55,6 +56,7 @@ void UTriggerComponent::InitEvents()
 	onSnap.AddDynamic(this, &UTriggerComponent::HandleSnap);
 	onSnap.AddDynamic(this, &UTriggerComponent::PlaySound);
 	onSnap.AddDynamic(this, &UTriggerComponent::HandleReveal);
+	
 
 }
 
@@ -62,6 +64,7 @@ void UTriggerComponent::InitEvents()
 void UTriggerComponent::ManageOverlap(AActor* _overlapped, AActor* _overlap)
 {
 	if (!_overlapped || !_overlap)return;
+	UE_LOG(LogTemp, Warning, TEXT("Overlappin with : %s"), *_overlap->GetName());
 	SnapTarget(_overlap);
 }
 
@@ -93,7 +96,14 @@ void UTriggerComponent::SnapTarget(AActor* _actorToSnap)
 
 void UTriggerComponent::HandleSnap()
 {
-	// Extra onSnap functionalities
+	int _size = doorsToOpen.Num();
+	for (int i = 0; i < _size; i++)
+	{
+		UMoverComponent* _moveCompo =
+			doorsToOpen[i]->GetComponentByClass<UMoverComponent>();
+		if (!_moveCompo)return;
+		_moveCompo->SetCanRotate(true);
+	}
 }
 
 void UTriggerComponent::PlaySound()
