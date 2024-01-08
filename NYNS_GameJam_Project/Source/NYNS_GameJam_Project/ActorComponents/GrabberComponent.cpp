@@ -139,12 +139,14 @@ void UGrabberComponent::Hold()
 
 		FVector _ownerLocation = GetOwner()->GetActorLocation();
 		FVector _cameraNormalDirection = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation().Vector();
-		FVector _targetLocation = _ownerLocation + _cameraNormalDirection * holdDistance;
-
+		//FVector _targetLocation = _ownerLocation + _cameraNormalDirection * holdDistance;
+		_ownerLocation += FVector(0, 0, holdHeight);
+		FVector _targetLocation = _ownerLocation + _cameraNormalDirection * holdDistance;//+ FVector(0, 100, 0);
 		physicsHandle->SetTargetLocationAndRotation(_targetLocation,
 			GetOwner()->GetActorRotation());
 		DrawDebugSphere(GetWorld(), _targetLocation, 20, 10, FColor::Blue);
 	}
+	
 }
 
 void UGrabberComponent::Release()
@@ -154,7 +156,7 @@ void UGrabberComponent::Release()
 		UPrimitiveComponent* _grabbedComponent = physicsHandle->GetGrabbedComponent();
 		physicsHandle->GetGrabbedComponent()->WakeAllRigidBodies();
 		AActor* _heldActor = physicsHandle->GetGrabbedComponent()->GetOwner();
-		_grabbedComponent->SetSimulatePhysics(false);
+		_grabbedComponent->SetSimulatePhysics(true);
 		physicsHandle->ReleaseComponent();
 		UE_LOG(LogTemp, Warning, TEXT("Removing tag from %s"), *_heldActor->GetName());
 		SetIsGrabbing();
