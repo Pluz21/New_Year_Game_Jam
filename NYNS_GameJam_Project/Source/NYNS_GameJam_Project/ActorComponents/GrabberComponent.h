@@ -31,6 +31,8 @@ public:
 	float maxGrabDistance = 600;
 	UPROPERTY(EditAnywhere, Category = "Grabber", meta = (ClampMin = "10", ClampMax = "1000"))
 	float holdDistance = 200;
+	UPROPERTY(EditAnywhere, Category = "Grabber", meta = (ClampMin = "10", ClampMax = "100"))
+	float holdHeight = 50;
 	UPROPERTY(VisibleAnywhere)
 	FVector targetLocation = FVector(0);
 	UPROPERTY(VisibleAnywhere)
