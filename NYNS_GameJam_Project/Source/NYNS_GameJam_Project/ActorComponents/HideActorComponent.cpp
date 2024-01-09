@@ -34,16 +34,25 @@ void UHideActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UHideActorComponent::Init()
 {
-	Reveal();
+	Hide();
 }
 
-void UHideActorComponent::Reveal()
+void UHideActorComponent::Hide()
 {
-	if (!GetOwner() || GetOwner()->GetComponentByClass<UStaticMeshComponent>() == nullptr)return;
-	GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetVisibility(false, true);
-	UE_LOG(LogTemp, Warning, TEXT("called init inside HIDDEN ACTOR"));
+	if (!GetOwner())return; //|| GetOwner()->GetComponentByClass<UStaticMeshComponent>() == nullptr)return;
+	TArray<UPrimitiveComponent*> _allComponents;
+	GetOwner()->GetComponents<UPrimitiveComponent>(_allComponents);
+	int _size = _allComponents.Num();
+	for (int i = 0; i < _size; i++)
+	{
+		_allComponents[i]->SetVisibility(false, true);
+		_allComponents[i]->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		UE_LOG(LogTemp, Warning, TEXT("Hidden %s"), *_allComponents[i]->GetName());
+
+	}
+	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetVisibility(false, true);
 	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
+	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
 
 }
 

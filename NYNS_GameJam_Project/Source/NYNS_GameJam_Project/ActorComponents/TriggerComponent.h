@@ -23,15 +23,16 @@ public:
 	// Sets default values for this component's properties
 	UTriggerComponent();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
 	TObjectPtr<URevealHiddenComponent> revealHiddenCompo;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
 	TArray<ADoor*> doorsToOpen;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
 	TObjectPtr<USoundBase> snapSound;;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
+	bool shouldDestroyAfterOverlap = false;
 
 protected:
 	// Called when the game starts

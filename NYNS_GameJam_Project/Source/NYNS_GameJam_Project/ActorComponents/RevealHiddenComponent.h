@@ -31,6 +31,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USoundBase> revealSound;
 
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	//bool canReveal = false;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
