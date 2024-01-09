@@ -41,6 +41,8 @@ class ANYNS_GameJam_ProjectCharacter : public ACharacter
 	class UInputAction* MoveAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> grabInput;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> inspectInput;
 
 	
 public:
@@ -69,6 +71,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 	void Grab();
+	void StopGrab();
+
+	void Inspect(const FInputActionValue& _value);
 
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;

@@ -71,7 +71,11 @@ void ANYNS_GameJam_ProjectCharacter::SetupPlayerInputComponent(class UInputCompo
 	
 		// Grab
 		EnhancedInputComponent->BindAction(grabInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Grab);
+		EnhancedInputComponent->BindAction(grabInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::StopGrab);
 
+		//Inspect
+		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
+		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
 		
 	}
 }
@@ -124,6 +128,16 @@ void ANYNS_GameJam_ProjectCharacter::Grab()
 {
 	if (!grabberComponent)return;
 	grabberComponent->Grab();
+}
+
+void ANYNS_GameJam_ProjectCharacter::StopGrab()
+{
+}
+
+void ANYNS_GameJam_ProjectCharacter::Inspect(const FInputActionValue& _value)
+{
+	bool _trigger = _value.Get<bool>();
+	UE_LOG(LogTemp, Warning, TEXT("Triggered inspect : %d"), _trigger);
 }
 
 void ANYNS_GameJam_ProjectCharacter::SetHasRifle(bool bNewHasRifle)
