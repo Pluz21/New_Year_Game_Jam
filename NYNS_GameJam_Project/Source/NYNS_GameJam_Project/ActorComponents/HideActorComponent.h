@@ -16,6 +16,8 @@ public:
 	// Sets default values for this component's properties
 	UHideActorComponent();
 
+	//UPROPERTY(EditAnywhere)
+	//TObjectPtr<UObjectBase> toIgnore;
 	
 protected:
 	// Called when the game starts
