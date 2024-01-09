@@ -13,9 +13,9 @@ class NYNS_GAMEJAM_PROJECT_API URevealHiddenComponent : public UActorComponent
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FConditionToRevealIsMet);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRevealEvent);
 
-	UPROPERTY(EditAnywhere, BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable)
 	FConditionToRevealIsMet onConditionToRevealIsMet;
-	UPROPERTY(EditAnywhere, BlueprintAssignable)
+	UPROPERTY(BlueprintAssignable)
 	FRevealEvent onReveal;
 
 
@@ -25,14 +25,17 @@ public:
 	// Sets default values for this component's properties
 	URevealHiddenComponent();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Reveal Hidden")
 	TArray<AActor*> allHiddenActors;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Reveal Hidden")
 	TObjectPtr<USoundBase> revealSound;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	//bool canReveal = false;
+	UPROPERTY()
+	bool canPlaySound = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Reveal Hidden")
+	bool shouldDestroyAfterReveal = true;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -48,5 +51,7 @@ public:
 	UFUNCTION()
 	void PlayRevealSound();
 	FConditionToRevealIsMet& GetOnConditionToRevealIsMet() { return onConditionToRevealIsMet; }
+	UFUNCTION()
+	void DestroyActor();
 		
 };

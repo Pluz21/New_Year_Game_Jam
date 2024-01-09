@@ -35,6 +35,7 @@ void URevealHiddenComponent::Init()
 {
 	onConditionToRevealIsMet.AddDynamic(this, &URevealHiddenComponent::RevealHidden);
 	onReveal.AddDynamic(this, &URevealHiddenComponent::PlayRevealSound);
+	onReveal.AddDynamic(this, &URevealHiddenComponent::DestroyActor);
 }
 
 
@@ -77,7 +78,14 @@ void URevealHiddenComponent::RevealHidden()
 
 void URevealHiddenComponent::PlayRevealSound()
 {
+	if(canPlaySound)
 	UGameplayStatics::PlaySound2D(GetWorld(), revealSound);
+	canPlaySound = false;
+}
 
+void URevealHiddenComponent::DestroyActor()
+{
+	if (!shouldDestroyAfterReveal || !GetOwner())return;
+		GetOwner()->Destroy();
 }
 
