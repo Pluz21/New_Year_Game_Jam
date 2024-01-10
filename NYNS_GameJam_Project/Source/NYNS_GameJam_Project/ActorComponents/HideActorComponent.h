@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "HideActorComponent.generated.h"
-class URevealHiddenComponent;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class NYNS_GAMEJAM_PROJECT_API UHideActorComponent : public UActorComponent
@@ -15,11 +15,9 @@ class NYNS_GAMEJAM_PROJECT_API UHideActorComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UHideActorComponent();
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<URevealHiddenComponent> revealHiddenCompo;
 
-	UPROPERTY(EditAnywhere)
-	bool ignorePhysics = true;
+	//UPROPERTY(EditAnywhere)
+	//TObjectPtr<UObjectBase> toIgnore;
 	
 protected:
 	// Called when the game starts
@@ -30,7 +28,6 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void Init();
 	void Hide();
-	UFUNCTION() void UpdateCollision(UPrimitiveComponent* _compoToUpdate);
 
 		
 };
