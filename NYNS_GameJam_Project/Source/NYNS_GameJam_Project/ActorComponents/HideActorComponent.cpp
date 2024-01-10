@@ -58,13 +58,9 @@ void UHideActorComponent::Hide()
 	for (int j = 0; j < _sizeLight; j++)
 	{
 		_allLightComponents[j]->SetVisibility(false, true);
-		//_allComponents[i]->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		//UE_LOG(LogTemp, Warning, TEXT("Hidden %s"), *_allComponents[i]->GetName());
+		
 
 	}
-	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetVisibility(false, true);
-	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
-
+	
 }
 
