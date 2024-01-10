@@ -127,7 +127,14 @@ void ANYNS_GameJam_ProjectCharacter::Look(const FInputActionValue& Value)
 void ANYNS_GameJam_ProjectCharacter::Grab()
 {
 	if (!grabberComponent)return;
-	grabberComponent->Grab();
+	if (grabberComponent->isGrabbing)
+	{
+		grabberComponent->Release();
+	}
+	else
+	{
+		grabberComponent->FindTargetInReach();
+	}
 }
 
 void ANYNS_GameJam_ProjectCharacter::StopGrab()

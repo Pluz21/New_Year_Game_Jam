@@ -42,32 +42,16 @@ void UGrabberComponent::Init()
 		UE_LOG(LogTemp, Warning, TEXT("no physics handle found"));
 
 	}
+	onValidTargetHit.AddDynamic(this, &UGrabberComponent::Grab);
 
 }
 
-bool UGrabberComponent::FindTargetInReach(FHitResult& _hitResult)
+void UGrabberComponent::FindTargetInReach()
 {
+	FHitResult _hitResult;
 	FVector _ownerLocation = GetOwner()->GetActorLocation();
 	FVector _cameraNormalDirection = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation().Vector();
-	// Better for linetrace
-	/*
-	APawn* _pawnRef = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!_pawnRef)return;
-	ADragon* _dragonRef = Cast<ADragon>(_pawnRef);
-	if (!_dragonRef || !_dragonRef->baseGunRef)return;
-	//_dragonRef->GetPawnViewLocation();
-	FRotator CameraRotation;
-	FVector _cameraForwardVector;
-	FVector _spawnPointRef; // only used to get the rotation from GetPlayerViewPoint since it OUTs FVector and FRotator;
 
-	FVector _spawnPointVector = _dragonRef->baseGunRef->materialChangerMesh->GetComponentLocation();
-	_dragonRef->playerController->GetPlayerViewPoint(_spawnPointRef, CameraRotation);
-	
-	_cameraForwardVector = FRotationMatrix(CameraRotation).GetScaledAxis(EAxis::X);
-
-	FVector _lookAtLocation = _spawnPointVector + (_cameraForwardVector * 10000);
-
-	*/
 	FVector _targetLocation = _ownerLocation + _cameraNormalDirection * maxGrabDistance;
 
 	FQuat _ownerQuat = GetOwner()->GetActorQuat();
@@ -79,18 +63,21 @@ bool UGrabberComponent::FindTargetInReach(FHitResult& _hitResult)
 	FCollisionQueryParams _customParams;
 	_customParams.AddIgnoredActor(GetOwner());
 	//ECollisionChannel::ECC_EngineTraceChannel1
-
-	bool _hit = GetWorld()->SweepSingleByChannel(_hitResult, _ownerLocation, // might need to change for more accurate grabbing linetrace
+	bool _hit = GetWorld()->SweepSingleByChannel( _hitResult, _ownerLocation, // might need to change for more accurate grabbing linetrace
 		_targetLocation,
 		FQuat::Identity, ECC_GameTraceChannel2,
 		_sphere, _customParams);
-	if (!_hit)return false;
+	if (!_hit)return;
 	DrawDebugPoint(GetWorld(), _hitResult.ImpactPoint, 20, FColor::Cyan, false, 5, 0);
 	UE_LOG(LogTemp, Warning, TEXT("Hit Actor: %s"), *_hitResult.GetActor()->GetName());
 
 	targetLocation = _targetLocation;
-	return _hit;
-
+	AActor* _actorHit = _hitResult.GetActor();
+	actorHit = _actorHit;
+	onValidTargetHit.Broadcast(_hit,_hitResult);
+	hitResult = _hitResult;
+	hit = _hit;
+	
 
 
 }
@@ -102,19 +89,8 @@ UPhysicsHandleComponent* UGrabberComponent::GetPhysicsHandleComponent()
 	return _physicsHandleComponent;
 }
 
-void UGrabberComponent::Grab()
+void UGrabberComponent::Grab(bool _hit, FHitResult _hitResult)
 {
-
-	FHitResult _hitResult;
-
-	bool _hasHit = FindTargetInReach(_hitResult);
-	hitResult = _hitResult;
-	if (!_hasHit)
-	{
-		Release();
-
-		return;
-	}
 
 	UPrimitiveComponent* _hitComponent = _hitResult.GetComponent();
 	hitComponent = _hitComponent;
@@ -126,10 +102,13 @@ void UGrabberComponent::Grab()
 		_hitComponent, NAME_None,		// might need to be actor
 		_hitResult.ImpactPoint,
 		_hitComponent->GetComponentRotation());
+
 	SetIsGrabbing();
-	
-	//onGrab.Broadcast(_hitResult.GetActor());
 }
+
+
+
+
 
 void UGrabberComponent::Hold()
 {
@@ -145,6 +124,7 @@ void UGrabberComponent::Hold()
 		physicsHandle->SetTargetLocationAndRotation(_targetLocation,
 			GetOwner()->GetActorRotation());
 		DrawDebugSphere(GetWorld(), _targetLocation, 20, 10, FColor::Blue);
+		SetIsHolding(true);
 	}
 }
 
@@ -157,7 +137,7 @@ void UGrabberComponent::Release()
 		AActor* _heldActor = physicsHandle->GetGrabbedComponent()->GetOwner();
 		_grabbedComponent->SetSimulatePhysics(true);
 		physicsHandle->ReleaseComponent();
-		UE_LOG(LogTemp, Warning, TEXT("Removing tag from %s"), *_heldActor->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Releasing and Removing tag from %s"), *_heldActor->GetName());
 		SetIsGrabbing();
 	}
 
@@ -166,5 +146,15 @@ void UGrabberComponent::Release()
 void UGrabberComponent::SetIsGrabbing()
 {
 	isGrabbing = !isGrabbing;
+	if(!isGrabbing)
+		SetIsHolding(false);
+
+	UE_LOG(LogTemp, Warning, TEXT("is grabbing : %d"), isGrabbing);
+
+}
+
+void UGrabberComponent::SetIsHolding(bool _value)
+{
+	isHolding = _value;
 }
 

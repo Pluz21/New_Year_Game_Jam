@@ -12,10 +12,10 @@
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class NYNS_GAMEJAM_PROJECT_API UGrabberComponent : public UActorComponent
 {
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FGrabEvent, AActor*, grabbedActor);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FValidTargetHitEvent, bool, _hit,FHitResult, _hitResult);
 
 	UPROPERTY(BlueprintAssignable)
-	FGrabEvent onGrab;
+	FValidTargetHitEvent onValidTargetHit;
 
 	GENERATED_BODY()
 
@@ -34,6 +34,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Grabber", meta = (ClampMin = "10", ClampMax = "100"))
 	float holdHeight = 50; //test for github
 	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<AActor> actorHit = nullptr;
+	UPROPERTY(VisibleAnywhere)
 	FVector targetLocation = FVector(0);
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UPhysicsHandleComponent> physicsHandle;
@@ -41,7 +43,10 @@ public:
 	TObjectPtr<UPrimitiveComponent> hitComponent;
 	UPROPERTY(VisibleAnywhere)
 	FHitResult hitResult;
-
+	UPROPERTY(VisibleAnywhere)
+	bool hit = false;;
+	UPROPERTY(VisibleAnywhere)
+	bool isHolding = false;
 
 protected:
 	// Called when the game starts
@@ -52,15 +57,21 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	void Init();
-
-	bool FindTargetInReach(FHitResult& _hitResult);
+	UFUNCTION(BlueprintCallable)
+	void FindTargetInReach();
 	UPhysicsHandleComponent* GetPhysicsHandleComponent();
 	UFUNCTION(BlueprintCallable)
-	void Grab();
+	void Grab(bool _hit,FHitResult _hitResult);
 	void Hold();
 	UFUNCTION(BlueprintCallable)
 	void Release();
 	UFUNCTION(BlueprintCallable)
 	void SetIsGrabbing();
+	UFUNCTION(BlueprintCallable)
+	void SetIsHolding(bool _value);
+	UFUNCTION()
+	bool GetHitBool() { return hit; }
+	UFUNCTION()
+	FHitResult GetHitResult() { return hitResult; }
 		
 };
