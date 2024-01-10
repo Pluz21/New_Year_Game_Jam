@@ -51,7 +51,7 @@ void URevealHiddenComponent::RevealHidden()
 	{
 		if (!allHiddenActors[i])continue;
 		TArray<USceneComponent*> _allComponents;
-		allHiddenActors[i]->GetComponents<USceneComponent>(_allComponents, true);
+		allHiddenActors[i]->GetComponents<USceneComponent>(_allComponents);
 	
 		int _size = _allComponents.Num();
 		UE_LOG(LogTemp, Warning, TEXT("%f, all compo size = "), _size);
@@ -61,7 +61,7 @@ void URevealHiddenComponent::RevealHidden()
 
 			if (_allComponents[j] == nullptr)continue;
 			_allComponents[j]->SetVisibility(true, true);
-			UStaticMeshComponent* _meshCompo = Cast<UStaticMeshComponent>(_allComponents[j]);
+			UPrimitiveComponent* _meshCompo = Cast<UPrimitiveComponent>(_allComponents[j]);
 			if(_meshCompo)
 				_meshCompo->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
 		}
