@@ -43,7 +43,9 @@ class ANYNS_GameJam_ProjectCharacter : public ACharacter
 	TObjectPtr<UInputAction> grabInput;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> inspectInput;
-
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=LineTrace)
+	TEnumAsByte<ECollisionChannel> collisionChannel;
 	
 public:
 	ANYNS_GameJam_ProjectCharacter();
@@ -72,7 +74,12 @@ protected:
 
 	void Grab();
 	void StopGrab();
-
+	/// <summary>
+	/// Inspect will return hit Actor
+	/// </summary>
+	/// <returns></returns>
+	UFUNCTION(BlueprintCallable)
+	AActor* Inspect();//const FInputActionValue& _value);
 	void Inspect(const FInputActionValue& _value);
 
 protected:

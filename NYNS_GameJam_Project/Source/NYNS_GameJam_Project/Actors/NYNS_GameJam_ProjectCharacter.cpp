@@ -74,8 +74,8 @@ void ANYNS_GameJam_ProjectCharacter::SetupPlayerInputComponent(class UInputCompo
 		EnhancedInputComponent->BindAction(grabInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::StopGrab);
 
 		//Inspect
-		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
-		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
+		//EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
+		//EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
 		
 	}
 }
@@ -134,10 +134,39 @@ void ANYNS_GameJam_ProjectCharacter::StopGrab()
 {
 }
 
-void ANYNS_GameJam_ProjectCharacter::Inspect(const FInputActionValue& _value)
+AActor* ANYNS_GameJam_ProjectCharacter::Inspect()//const FInputActionValue& _value)
 {
-	bool _trigger = _value.Get<bool>();
-	UE_LOG(LogTemp, Warning, TEXT("Triggered inspect : %d"), _trigger);
+	//bool _trigger = _value.Get<bool>();
+	//UE_LOG(LogTemp, Warning, TEXT("Triggered inspect : %d"), _trigger);
+
+	FHitResult HitResult;
+	
+
+	FVector StartLocation;
+	FRotator PlayerRotation;
+	Controller->GetPlayerViewPoint(StartLocation, PlayerRotation);
+
+	FVector ForwardVector = PlayerRotation.Vector();
+	FVector TargetLocation = StartLocation + ForwardVector * 200;
+
+	TArray<AActor*> ToIgnore; // Declared as a member variable for the moment
+
+	const bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult,
+		StartLocation, TargetLocation, collisionChannel);
+
+	if (bHit)
+	{
+		DrawDebugLine(GetWorld(), StartLocation, 
+			HitResult.ImpactPoint, FColor::Green, false, 2.0f, 0, 2.0f);
+		return HitResult.GetActor();
+	}
+	else
+	{
+		DrawDebugLine(GetWorld(), 
+			StartLocation, TargetLocation, FColor::Red, false, 2.0f, 0, 2.0f);
+		return nullptr;
+	}
+
 }
 
 void ANYNS_GameJam_ProjectCharacter::SetHasRifle(bool bNewHasRifle)
