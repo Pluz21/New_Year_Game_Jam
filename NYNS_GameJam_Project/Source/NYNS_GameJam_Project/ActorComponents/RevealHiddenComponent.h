@@ -51,7 +51,6 @@ public:
 	UFUNCTION()
 	void PlayRevealSound();
 	FConditionToRevealIsMet& GetOnConditionToRevealIsMet() { return onConditionToRevealIsMet; }
-	FRevealEvent& GetOnReveal() { return onReveal; }
 	UFUNCTION()
 	void DestroyActor();
 		

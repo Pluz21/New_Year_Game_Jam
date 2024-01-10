@@ -3,7 +3,6 @@
 
 #include "NYNS_GameJam_Project/ActorComponents/HideActorComponent.h"
 #include <Components/LightComponentBase.h>
-#include "RevealHiddenComponent.h"
 
 // Sets default values for this component's properties
 UHideActorComponent::UHideActorComponent()
@@ -37,9 +36,6 @@ void UHideActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 void UHideActorComponent::Init()
 {
 	Hide();
-	if (!GetOwner())return;
-	revealHiddenCompo = GetOwner()->GetComponentByClass<URevealHiddenComponent>();
-	//revealHiddenCompo->GetOnReveal().AddDynamic(this, &UHideActorComponent::UpdatePhysics)
 }
 
 void UHideActorComponent::Hide()
@@ -54,8 +50,7 @@ void UHideActorComponent::Hide()
 	for (int i = 0; i < _size; i++)
 	{
 		_allComponents[i]->SetVisibility(false, true);
-		if (ignorePhysics)
-			UpdateCollision(_allComponents[i]);
+		_allComponents[i]->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		UE_LOG(LogTemp, Warning, TEXT("Hidden %s"), *_allComponents[i]->GetName());
 
 	}
@@ -72,13 +67,4 @@ void UHideActorComponent::Hide()
 	//GetOwner()->GetComponentByClass<UStaticMeshComponent>()->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
 
 }
-
-
-
-void UHideActorComponent::UpdateCollision(UPrimitiveComponent* _compoToUpdate)
-{
-	_compoToUpdate->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-}
-
-
 
