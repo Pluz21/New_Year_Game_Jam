@@ -16,7 +16,6 @@
 ANYNS_GameJam_ProjectCharacter::ANYNS_GameJam_ProjectCharacter()
 {
 	//Custom Components
-	grabberComponent = CreateDefaultSubobject<UGrabberComponent>(TEXT("GrabberComponent"));
 	physicsHandle = CreateDefaultSubobject<UPhysicsHandleComponent>("PhysicsHandle");
 
 	
@@ -41,7 +40,6 @@ ANYNS_GameJam_ProjectCharacter::ANYNS_GameJam_ProjectCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
-	AddOwnedComponent(grabberComponent);
 	AddOwnedComponent(physicsHandle);
 }
 
@@ -126,7 +124,7 @@ void ANYNS_GameJam_ProjectCharacter::Look(const FInputActionValue& Value)
 
 void ANYNS_GameJam_ProjectCharacter::Grab()
 {
-	if (!grabberComponent)return;
+	/*if (!grabberComponent)return;
 	if (grabberComponent->isGrabbing)
 	{
 		grabberComponent->Release();
@@ -134,7 +132,7 @@ void ANYNS_GameJam_ProjectCharacter::Grab()
 	else
 	{
 		grabberComponent->FindTargetInReach();
-	}
+	}*/
 }
 
 void ANYNS_GameJam_ProjectCharacter::StopGrab()
