@@ -62,8 +62,11 @@ void URevealHiddenComponent::RevealHidden()
 			if (_allComponents[j] == nullptr)continue;
 			_allComponents[j]->SetVisibility(true, true);
 			UPrimitiveComponent* _meshCompo = Cast<UPrimitiveComponent>(_allComponents[j]);
-			if(_meshCompo)
+			
+
+			if(_meshCompo )
 				_meshCompo->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
+				
 		}
 		}
 		
