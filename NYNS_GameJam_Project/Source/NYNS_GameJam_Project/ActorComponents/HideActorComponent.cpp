@@ -50,6 +50,10 @@ void UHideActorComponent::Hide()
 	for (int i = 0; i < _size; i++)
 	{
 		_allComponents[i]->SetVisibility(false, true);
+		bool _isSimulatingPhysics = _allComponents[i]->IsSimulatingPhysics();
+		UpdateHasPhysicsEnabled(_isSimulatingPhysics);
+		if (_isSimulatingPhysics)
+			_allComponents[i]->SetSimulatePhysics(false);
 		_allComponents[i]->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		UE_LOG(LogTemp, Warning, TEXT("Hidden %s"), *_allComponents[i]->GetName());
 
@@ -62,5 +66,10 @@ void UHideActorComponent::Hide()
 
 	}
 	
+}
+
+void UHideActorComponent::UpdateHasPhysicsEnabled(bool _value)
+{
+	hasPhysicsEnabled = _value;
 }
 

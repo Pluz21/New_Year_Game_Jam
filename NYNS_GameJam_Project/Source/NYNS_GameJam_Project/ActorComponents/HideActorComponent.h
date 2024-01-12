@@ -16,8 +16,8 @@ public:
 	// Sets default values for this component's properties
 	UHideActorComponent();
 
-	//UPROPERTY(EditAnywhere)
-	//TObjectPtr<UObjectBase> toIgnore;
+	UPROPERTY(VisibleAnywhere)
+	bool hasPhysicsEnabled = false;;
 	
 protected:
 	// Called when the game starts
@@ -28,6 +28,9 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void Init();
 	void Hide();
+	void UpdateHasPhysicsEnabled(bool _value);
+	UFUNCTION(BlueprintCallable)
+	bool GetHasPhysicsEnabled() { return hasPhysicsEnabled; }
 
 		
 };

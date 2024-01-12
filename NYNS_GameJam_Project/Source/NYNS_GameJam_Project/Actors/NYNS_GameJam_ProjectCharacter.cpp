@@ -75,12 +75,24 @@ void ANYNS_GameJam_ProjectCharacter::SetupPlayerInputComponent(class UInputCompo
 		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
 		EnhancedInputComponent->BindAction(inspectInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::Inspect);
 		
+		// Open Menu
+		EnhancedInputComponent->BindAction(openMenuInput, ETriggerEvent::Triggered, this, &ANYNS_GameJam_ProjectCharacter::OpenMenu);
+		//EnhancedInputComponent->BindAction(openMenuInput, ETriggerEvent::Completed, this, &ANYNS_GameJam_ProjectCharacter::OpenMenu);
+
 	}
 }
 
 void ANYNS_GameJam_ProjectCharacter::Init()
 {
 	InitInputs();
+
+	APlayerController* _playerController = GetWorld()->GetFirstPlayerController();
+	_playerController->SetShowMouseCursor(false);
+	FInputModeGameOnly _inputMode;
+	_playerController->SetInputMode(_inputMode);
+
+	// Optionally, hide the mouse cursor
+	_playerController->bShowMouseCursor = false;
 }
 
 void ANYNS_GameJam_ProjectCharacter::InitInputs()
@@ -93,6 +105,13 @@ void ANYNS_GameJam_ProjectCharacter::InitInputs()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+}
+
+void ANYNS_GameJam_ProjectCharacter::OpenMenu()
+{
+	onMenuOpened.Broadcast();
+	UE_LOG(LogTemp, Warning, TEXT("CALLED Open menu input"));
+
 }
 
 

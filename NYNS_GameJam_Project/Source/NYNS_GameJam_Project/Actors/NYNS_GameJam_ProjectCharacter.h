@@ -19,6 +19,9 @@ class UPhysicsHandleComponent;
 UCLASS(config=Game)
 class ANYNS_GameJam_ProjectCharacter : public ACharacter
 {
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOpenMenuEvent);
+	UPROPERTY()
+	FOpenMenuEvent onMenuOpened;
 	GENERATED_BODY()
 
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
@@ -42,6 +45,8 @@ class ANYNS_GameJam_ProjectCharacter : public ACharacter
 	TObjectPtr<UInputAction> grabInput;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> inspectInput;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> openMenuInput;
 
 	
 public:
@@ -82,6 +87,9 @@ public:
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 	void Init();
 	void InitInputs();
+	UFUNCTION()
+	void OpenMenu();
+	FOpenMenuEvent& GetOnOpenedMenu() { return onMenuOpened; }
 
 
 };
