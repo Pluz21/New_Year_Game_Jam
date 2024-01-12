@@ -33,7 +33,8 @@ public:
 	TObjectPtr<USoundBase> snapSound;;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
 	bool shouldDestroyAfterOverlap = false;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
+	TObjectPtr<AActor> snappedActor;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

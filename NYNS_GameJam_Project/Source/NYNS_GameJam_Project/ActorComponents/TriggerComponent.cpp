@@ -9,6 +9,7 @@
 
 #include "GrabberComponent.h"
 #include "MoverComponent.h"
+#include <Components/BoxComponent.h>
 UTriggerComponent::UTriggerComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -82,7 +83,7 @@ void UTriggerComponent::SnapTarget(AActor* _actorToSnap)
 
 	_primitiveCompo->SetSimulatePhysics(false);	
 	_actorToSnap->AttachToComponent(GetOwner()->
-		GetComponentByClass<UStaticMeshComponent>(), _snapScale);
+		GetComponentByClass<UBoxComponent>(), _snap);
 
 		ANYNS_GameJam_ProjectCharacter* _playerRef = 
 			Cast<ANYNS_GameJam_ProjectCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn());
@@ -90,7 +91,7 @@ void UTriggerComponent::SnapTarget(AActor* _actorToSnap)
 	UGrabberComponent* _grabberCompo = _playerRef->GetComponentByClass<UGrabberComponent>();
 	if (!_grabberCompo)return;
 		_grabberCompo->Release();
-
+		snappedActor = _actorToSnap;
 	onSnap.Broadcast();
 }
 
