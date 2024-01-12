@@ -35,6 +35,12 @@ public:
 	bool shouldDestroyAfterOverlap = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
 	TObjectPtr<AActor> snappedActor;
+	
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Trigger")
+	bool canSnap = true;
+
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

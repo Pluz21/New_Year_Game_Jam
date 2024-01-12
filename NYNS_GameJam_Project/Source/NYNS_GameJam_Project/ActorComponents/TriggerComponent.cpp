@@ -71,7 +71,7 @@ void UTriggerComponent::ManageOverlap(AActor* _overlapped, AActor* _overlap)
 
 void UTriggerComponent::SnapTarget(AActor* _actorToSnap)
 {
-	if (!_actorToSnap)return;
+	if (!_actorToSnap || !canSnap)return;
 
 	UPrimitiveComponent* _primitiveCompo = _actorToSnap->
 		GetComponentByClass<UPrimitiveComponent>();
@@ -97,6 +97,7 @@ void UTriggerComponent::SnapTarget(AActor* _actorToSnap)
 
 void UTriggerComponent::HandleSnap()
 {
+	
 	int _size = doorsToOpen.Num();
 	for (int i = 0; i < _size; i++)
 	{
