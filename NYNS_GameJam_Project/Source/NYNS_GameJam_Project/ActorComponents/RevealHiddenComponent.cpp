@@ -4,6 +4,7 @@
 #include "NYNS_GameJam_Project/ActorComponents/RevealHiddenComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include <Components/LightComponentBase.h>
+#include "SoundComponent.h"
 
 // Sets default values for this component's properties
 URevealHiddenComponent::URevealHiddenComponent()
@@ -37,6 +38,7 @@ void URevealHiddenComponent::Init()
 	onConditionToRevealIsMet.AddDynamic(this, &URevealHiddenComponent::RevealHidden);
 	onReveal.AddDynamic(this, &URevealHiddenComponent::PlayRevealSound);
 	onReveal.AddDynamic(this, &URevealHiddenComponent::DestroyActor);
+	onRevealActor.AddDynamic(this, &URevealHiddenComponent::UpdateHiddenActor);
 }
 
 
@@ -67,22 +69,32 @@ void URevealHiddenComponent::RevealHidden()
 			if(_meshCompo )
 				_meshCompo->SetCollisionEnabled(ECollisionEnabled::QueryAndProbe);
 				
+			onRevealActor.Broadcast(allHiddenActors[i]);
 		}
 		}
-		
 		onReveal.Broadcast();
 }
 
 void URevealHiddenComponent::PlayRevealSound()
 {
-	if(canPlaySound)
+	if(canPlayRevealSound)
 	UGameplayStatics::PlaySound2D(GetWorld(), revealSound);
-	canPlaySound = false;
+	canPlayRevealSound = false;
 }
 
 void URevealHiddenComponent::DestroyActor()
 {
 	if (!shouldDestroyAfterReveal || !GetOwner())return;
 		GetOwner()->Destroy();
+}
+
+void URevealHiddenComponent::UpdateHiddenActor(AActor* _revealedActor)
+{
+	if (!revealedActorCanPlaySoundCompo)return;
+	USoundComponent* _soundCompo = _revealedActor->
+		GetComponentByClass<USoundComponent>();
+	if (!_soundCompo)return;
+	_soundCompo->SetCanPlaySound(true);
+	_soundCompo->PlaySoundLogic();
 }
 

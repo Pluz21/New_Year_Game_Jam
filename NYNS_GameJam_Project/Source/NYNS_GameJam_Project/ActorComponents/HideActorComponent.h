@@ -18,10 +18,11 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	bool hasPhysicsEnabled = false;;
-	
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
 
 public:	
 	// Called every frame
@@ -31,6 +32,5 @@ public:
 	void UpdateHasPhysicsEnabled(bool _value);
 	UFUNCTION(BlueprintCallable)
 	bool GetHasPhysicsEnabled() { return hasPhysicsEnabled; }
-
 		
 };

@@ -36,11 +36,15 @@ void UHideActorComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 void UHideActorComponent::Init()
 {
 	Hide();
+	UE_LOG(LogTemp, Warning, TEXT("Initi hideactor"));
+
 }
 
 void UHideActorComponent::Hide()
 {
 	if (!GetOwner())return; //|| GetOwner()->GetComponentByClass<UStaticMeshComponent>() == nullptr)return;
+	
+	
 	TArray<UPrimitiveComponent*> _allComponents;
 	TArray<ULightComponentBase*> _allLightComponents;
 	GetOwner()->GetComponents<UPrimitiveComponent>(_allComponents);
@@ -72,4 +76,5 @@ void UHideActorComponent::UpdateHasPhysicsEnabled(bool _value)
 {
 	hasPhysicsEnabled = _value;
 }
+
 
