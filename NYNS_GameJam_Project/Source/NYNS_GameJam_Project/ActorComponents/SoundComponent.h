@@ -22,6 +22,10 @@ public:
 	TObjectPtr<USoundBase> soundToPlay;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
 	TObjectPtr<USoundBase> staticSound;
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	TObjectPtr<UAudioComponent> soundAudioComponent;
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	TObjectPtr<UAudioComponent> staticSoundAudioComponent;
 
 	UPROPERTY()
 	FTimerHandle soundDelayHandler;
@@ -48,8 +52,9 @@ public:
 	void Init();
 	void PlaySoundLogic();
 	void PlaySoundInWorld();
+	void PlayStatic();
 	void SetCanPlaySound(bool _value) {canPlaySound = _value; }
 	void CheckHasHideActorComponent();
-
+	void StopStaticSound();
 
 };

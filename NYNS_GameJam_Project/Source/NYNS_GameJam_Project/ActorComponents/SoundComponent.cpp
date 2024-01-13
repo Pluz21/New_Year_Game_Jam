@@ -42,7 +42,9 @@ void USoundComponent::Init()
 	UAudioComponent* _audioComponent = ownerRef->GetComponentByClass<UAudioComponent>();
 	USoundBase* _soundBase = _audioComponent->Sound;
 	soundToPlay = _soundBase;
+	soundAudioComponent= _audioComponent;
 	PlaySoundLogic();
+	if (!staticSound)return;
 	UE_LOG(LogTemp, Warning, TEXT("Initi soundocmpo"));
 
 }
@@ -53,15 +55,34 @@ void USoundComponent::PlaySoundLogic()
 	if (!soundToPlay)return;
 	if (canDelaySound)	
 	{
+		if (canAddStatic)
+		{
+			GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::PlayStatic, soundDelay, false);
+			UE_LOG(LogTemp, Warning, TEXT("Called Static timer"));
+
+				
+
+		}
+		
 		GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::PlaySoundInWorld, soundDelay, false);
+		UE_LOG(LogTemp, Warning, TEXT("Called regular Sound timer"));
+
 	}
-	PlaySoundInWorld();
+	//PlaySoundInWorld();
 }
 
 void USoundComponent::PlaySoundInWorld()
 {
-	UGameplayStatics::PlaySound2D(GetWorld(), soundToPlay);
+	
+	 UGameplayStatics::PlaySound2D(GetWorld(), soundToPlay);
 
+
+}
+void USoundComponent::PlayStatic()
+{
+	UGameplayStatics::PlaySound2D(GetWorld(), staticSound);
+	float _soundDuration = soundToPlay->Duration;
+	GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::StopStaticSound, _soundDuration, false);
 }
 void USoundComponent::CheckHasHideActorComponent()
 
@@ -71,6 +92,15 @@ void USoundComponent::CheckHasHideActorComponent()
 	{
 		canPlaySound = false;
 	}
+}
+
+void USoundComponent::StopStaticSound()
+{
+	staticSoundAudioComponent->SetSound(staticSound);
+
+	staticSoundAudioComponent->Stop();		
+	UE_LOG(LogTemp, Warning, TEXT("Stop static called"));
+
 }
 
 
