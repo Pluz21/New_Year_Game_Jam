@@ -18,26 +18,28 @@ public:
 	UPROPERTY()
 	TObjectPtr<AActor> ownerRef;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY()
 	TObjectPtr<USoundBase> soundToPlay;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
-	TObjectPtr<USoundBase> staticSound;
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	//UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	//TObjectPtr<USoundBase> staticSound;
+	UPROPERTY()
 	TObjectPtr<UAudioComponent> soundAudioComponent;
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Sound Settings")
-	TObjectPtr<UAudioComponent> staticSoundAudioComponent;
+	//UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	//TObjectPtr<UAudioComponent> staticSoundAudioComponent;
 
 	UPROPERTY()
 	FTimerHandle soundDelayHandler;
+	UPROPERTY()
+	FTimerHandle staticSoundDelayHandler;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
 	bool canDelaySound = false;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
-	bool canAddStatic = false;
+	//UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings")
+	//bool canAddStatic = false;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = "Sound Settings", meta = (EditCondition = "!playSoundWorld"))
 	bool canPlaySound = true;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0", ClampMax = "100"), meta = (EditCondition = "canAddStatic"), Category = "Sound Settings")
-	float staticVolume = 0;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0", ClampMax = "100"), meta = (EditCondition = "canDelaySound"), Category = "Sound Settings")
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0", ClampMax = "100"), meta = (EditCondition = "canAddStatic"), Category = "Sound Settings")
+	//float staticVolume = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "0.5", ClampMax = "100"), meta = (EditCondition = "canDelaySound"), Category = "Sound Settings")
 	float soundDelay = 0;
 
 

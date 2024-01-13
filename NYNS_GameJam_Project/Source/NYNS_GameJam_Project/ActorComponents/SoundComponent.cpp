@@ -43,8 +43,14 @@ void USoundComponent::Init()
 	USoundBase* _soundBase = _audioComponent->Sound;
 	soundToPlay = _soundBase;
 	soundAudioComponent= _audioComponent;
+	_audioComponent->DestroyComponent();
+	//staticSound = _staticSoundBase;
+	//staticSoundAudioComponent = _audioStaticComponent;
+
+
 	PlaySoundLogic();
-	if (!staticSound)return;
+	//if (!staticSound)return;
+
 	UE_LOG(LogTemp, Warning, TEXT("Initi soundocmpo"));
 
 }
@@ -55,14 +61,14 @@ void USoundComponent::PlaySoundLogic()
 	if (!soundToPlay)return;
 	if (canDelaySound)	
 	{
-		if (canAddStatic)
-		{
-			GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::PlayStatic, soundDelay, false);
-			UE_LOG(LogTemp, Warning, TEXT("Called Static timer"));
+		//if (canAddStatic)
+		//{
+			//GetWorld()->GetTimerManager().SetTimer(staticSoundDelayHandler, this, &USoundComponent::PlayStatic, soundDelay, false);
+			//UE_LOG(LogTemp, Warning, TEXT("Called Static timer"));
 
 				
 
-		}
+		//}
 		
 		GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::PlaySoundInWorld, soundDelay, false);
 		UE_LOG(LogTemp, Warning, TEXT("Called regular Sound timer"));
@@ -80,9 +86,9 @@ void USoundComponent::PlaySoundInWorld()
 }
 void USoundComponent::PlayStatic()
 {
-	UGameplayStatics::PlaySound2D(GetWorld(), staticSound);
-	float _soundDuration = soundToPlay->Duration;
-	GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::StopStaticSound, _soundDuration, false);
+	////UGameplayStatics::PlaySound2D(GetWorld(), staticSound, 1.0f, 1.0f, 0.0f, nullptr, true);
+	//float _soundDuration = soundToPlay->Duration;
+	//GetWorld()->GetTimerManager().SetTimer(soundDelayHandler, this, &USoundComponent::StopStaticSound, _soundDuration-1 , true);
 }
 void USoundComponent::CheckHasHideActorComponent()
 
@@ -95,10 +101,8 @@ void USoundComponent::CheckHasHideActorComponent()
 }
 
 void USoundComponent::StopStaticSound()
-{
-	staticSoundAudioComponent->SetSound(staticSound);
-
-	staticSoundAudioComponent->Stop();		
+{	
+	//if (!staticSoundAudioComponent)return;
 	UE_LOG(LogTemp, Warning, TEXT("Stop static called"));
 
 }
