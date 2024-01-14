@@ -1,6 +1,6 @@
 # Project Name
 
-[![License: MIT](https://img.shields.io/badge/License-TVL-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Copyright: TVL](https://img.shields.io/badge/License-TVL-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
 
