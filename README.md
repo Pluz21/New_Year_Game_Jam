@@ -2,7 +2,7 @@
 # Cogitationis
 [![copyright: TVL](https://img.shields.io/badge/Copyright-TVL-yellow.svg)](https://pluz21.itch.io/)
 
-ItchIO downloadable project for Windows : https://pluz21.itch.io/cogitationis.
+ItchIO downloadable game for Windows : https://pluz21.itch.io/cogitationis.
 
 ## Description
 
