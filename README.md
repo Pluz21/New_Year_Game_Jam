@@ -1,10 +1,12 @@
 # Project Name
-
+ItchIO downloadable project for Windows : https://pluz21.itch.io/cogitationis
 [![copyright: TVL](https://img.shields.io/badge/Copyright-TVL-yellow.svg)](https://pluz21.itch.io/)
 
 ## Description
 
-Briefly describe your project. Provide context, purpose, and a summary of features.
+Cogitationis 
+Explore "Cogitationis," an escape room game made for the "New Year New Skills" itch.io game jam. Developed in 7 days by a team of 5 people.
+
 
 ## Table of Contents
 
