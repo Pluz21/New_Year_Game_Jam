@@ -1,6 +1,6 @@
 # Project Name
 
-[![copyright: TVL](https://img.shields.io/badge/License-TVL-yellow.svg)](https://pluz21.itch.io/)
+[![copyright: TVL](https://img.shields.io/badge/Copyright-TVL-yellow.svg)](https://pluz21.itch.io/)
 
 ## Description
 
